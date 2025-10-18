@@ -22,16 +22,16 @@ function x = chase(a, b, c, d)
     for i = 2:n-1
 %         alpha(i) = b(i) - a(i-1) * c(i-1) / alpha(i-1);
 %         beta(i) = (d(i) - a(i-1) * beta(i-1)) / alpha(i);
-        alpha(i) = (d(i)-a(i-1)*alpha(i-1))/(b(i)-a(i-1)*beta(i-1));
-        beta(i) = c(i)/(b(i)-a(i-1)*beta(i-1));
+        alpha(i) = (d(i)-a(i)*alpha(i-1))/(b(i)-a(i)*beta(i-1));
+        beta(i) = c(i)/(b(i)-a(i)*beta(i-1));
     end
-    alpha(n) = (d(n)-a(n-1)*alpha(n-1))/(b(n)-a(n-1)*beta(n-1));
+    alpha(n) = (d(n)-a(n)*alpha(n-1))/(b(n)-a(n)*beta(n-1));
     
     % 赶过程
 %     x(n) = beta(n);
     x(n) = alpha(n);
     for i = n-1:-1:1
 %         x(i) = beta(i) - c(i) * x(i+1) / alpha(i);
-        x(i) = alpha(i)-beta(i)*x(i+1);
+        x(i) = alpha(i)-beta(i)*
     end
 end
