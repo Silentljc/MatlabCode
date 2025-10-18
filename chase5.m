@@ -1,12 +1,4 @@
-clear;clc;
-a=ones(7,1);
-b=ones(8,1);
-c=ones(9,1)*4;
-d=ones(8,1);
-e=ones(7,1);
-f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
-
-% function [x,y] = chase5(a,b,c,d,e,f)
+function [x,y] = chase5(a,b,c,d,e,f)
     %初始化
     n = length(c);
     s = zeros(n-2,1);
@@ -25,13 +17,12 @@ f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
     p(1) = d(1)/c(1);
     q(1) = e(1)/l(1);
     q(2) = e(2)/l(2);
-    p(2) = d(2)/l(2)-m(1)*q(1)/l(1);
+    p(2) = d(2)/l(2)-m(1)*q(1)/l(2);
 
     for i=3:n
         s(i-2) = a(i-2);
         m(i-1) = b(i-1)-s(i-2)*p(i-2);
         l(i) = c(i)-s(i-2)*q(i-2)-m(i-1)*p(i-1);
-%         l(i) = c(i)-s(i-2)*q(i-2)-(b(i-1)-s(i-2)*p(i-2))*p(i-1);
 
         if i<n-1
             q(i) = e(i)/l(i);
@@ -43,12 +34,22 @@ f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
         end
        
     end
-L = diag(l) + diag(m, -1) + diag(s, -2) ;
-U = diag(ones(n,1)) + diag(p,1) + diag(q,2);
-A = diag(c) + ...
-    diag(b, -1) + diag(d, 1) + ...
-    diag(a, -2) + diag(e, 2);
-[L1,U1] = lu(A);
-AA = L1*U1;
-y = L\f;
-x = U\y
+
+    %追过程
+    y(1) = f(1)/l(1);
+    y(2) = (f(2)-m(1)*y(1))/l(2);
+    for i=3:n
+        y(i) = (f(i)-s(i-2)*y(i-2)-m(i-1)*y(i-1))/l(i);
+    end
+
+    %赶过程
+    x(n) = y(n);
+    x(n-1) = y(n-1)-p(n-1)*x(n);
+    for i=n-2:-1:1
+        x(i) = y(i)-p(i)*x(i+1)-q(i)*x(i+2);
+    end
+end
+
+
+
+

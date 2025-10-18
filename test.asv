@@ -1,10 +1,10 @@
 clear;clc;
-a=ones(7,1);
-b=ones(8,1);
-c=ones(9,1)*4;
-d=ones(8,1);
-e=ones(7,1);
-f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
+a=ones(3,1);
+b=ones(4,1);
+c=ones(5,1)*4;
+d=ones(4,1);
+e=ones(3,1);
+f=[3;4;5;4;3]+ones(5,1)*3;
 
 % function [x,y] = chase5(a,b,c,d,e,f)
     %初始化
@@ -25,7 +25,7 @@ f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
     p(1) = d(1)/c(1);
     q(1) = e(1)/l(1);
     q(2) = e(2)/l(2);
-    p(2) = d(2)/l(2)-m(1)*q(1)/l(1);
+    p(2) = (d(2)/c(2)-m(1)*q(1))/l(2);
 
     for i=3:n
         s(i-2) = a(i-2);
@@ -45,6 +45,7 @@ f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
     end
 L = diag(l) + diag(m, -1) + diag(s, -2) ;
 U = diag(ones(n,1)) + diag(p,1) + diag(q,2);
+AAA = L*U;
 A = diag(c) + ...
     diag(b, -1) + diag(d, 1) + ...
     diag(a, -2) + diag(e, 2);
