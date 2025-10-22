@@ -1,3 +1,5 @@
+% 紧抛物ADI
+
 tic;
 clear
 clc
@@ -48,14 +50,12 @@ for p=1:length(M)
             Numerical(i,M(p)+1,k)=exp(1/2*(1+x(i))-t(k));%  边值Numerical（x,1,t）=u(i,m,k)
         end
     end
-%     f=inline('-3/2*exp(1/2*(x+y)-t)','x','y','t');% f(x,y,t)
-%     fun=inline('exp(1/2*(x+y)-t)','x','y','t');% 精确解
     f = @(x,y,t) -3/2*exp(1/2*(x+y)-t);
     fun = @(x,y,t) exp(1/2*(x+y)-t);
     % 计算精确解
     for i=1:M(p)+1
         for j=1:M(p)+1
-            for k=1:M(p)+1
+            for k=1:N(p)+1  % 修正：应该是N(p)+1而不是M(p)+1
                 Accurate(i,j,k)=fun(x(i),y(j),t(k));
             end
         end
@@ -93,24 +93,24 @@ for p=1:length(M)
         end
     end
 
-    error=abs(Numerical(:,:,M(p)+1)-Accurate(:,:,M(p)+1));
+    error=abs(Numerical(:,:,end)-Accurate(:,:,end));  % 修正：使用end而不是M(p)+1
     error_inf(p)=max(max(error));
     figure(p)
     [X,Y]=meshgrid(y,x);
     subplot(1,3,1)
-    surf(X,Y,Accurate(:,:,M(p)));
-    xlabel('x');ylabel('y');zlabel('Numerical');
-    title('the image of Accurate rusult');
+    surf(X,Y,Accurate(:,:,end));  % 修正：使用end而不是M(p)
+    xlabel('x');ylabel('y');zlabel('Accurate');  % 修正：标签改为Accurate
+    title('the image of Accurate result');
     grid on;
     subplot(1,3,2)
-    surf(X,Y,Numerical(:,:,M(p)));
+    surf(X,Y,Numerical(:,:,end));  % 修正：使用end而不是M(p)
     xlabel('x');ylabel('y');zlabel('Numerical');
     title('the image of Numerical');
     grid on;
     subplot(1,3,3)
     surf(X,Y,error);
     xlabel('x');ylabel('y');zlabel('error');
-    title('the image of error Numerical');
+    title('the image of error');
     grid on;
 end
 for k=2:length(M)
