@@ -6,49 +6,7 @@ d=ones(8,1);
 e=ones(7,1);
 f=[3;4;ones(5,1)*5;4;3]+ones(9,1)*3;
 
-% function [x,y] = chase5(a,b,c,d,e,f)
-    %初始化
-    n = length(c);
-    s = zeros(n-2,1);
-    m = zeros(n-1,1);
-    l = zeros(n,1);
-    p = zeros(n-1,1);
-    q = zeros(n-2,1);
+x = chase5(a,b,c,d,e,f)
 
-    x = zeros(n,1);
-    y = zeros(n,1);
-
-    %对五对角矩阵LU分解
-    m(1) = b(1);
-    l(1) = c(1);
-    l(2) = c(2)-b(1)*d(1)/c(1);
-    p(1) = d(1)/c(1);
-    q(1) = e(1)/l(1);
-    q(2) = e(2)/l(2);
-    p(2) = d(2)/l(2)-m(1)*q(1)/l(1);
-
-    for i=3:n
-        s(i-2) = a(i-2);
-        m(i-1) = b(i-1)-s(i-2)*p(i-2);
-        l(i) = c(i)-s(i-2)*q(i-2)-m(i-1)*p(i-1);
-%         l(i) = c(i)-s(i-2)*q(i-2)-(b(i-1)-s(i-2)*p(i-2))*p(i-1);
-
-        if i<n-1
-            q(i) = e(i)/l(i);
-            p(i) = (d(i)-m(i-1)*q(i-1))/l(i);
-            continue;
-        end
-        if i<n
-             p(i) = (d(i)-m(i-1)*q(i-1))/l(i);
-        end
-       
-    end
-L = diag(l) + diag(m, -1) + diag(s, -2) ;
-U = diag(ones(n,1)) + diag(p,1) + diag(q,2);
-A = diag(c) + ...
-    diag(b, -1) + diag(d, 1) + ...
-    diag(a, -2) + diag(e, 2);
-[L1,U1] = lu(A);
-AA = L1*U1;
-y = L\f;
-x = U\y
+err = ones(9,1)-x
+ 

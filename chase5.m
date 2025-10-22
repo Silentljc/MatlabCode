@@ -1,4 +1,4 @@
-function [x,y] = chase5(a,b,c,d,e,f)
+function x = chase5(a,b,c,d,e,f)
     %初始化
     n = length(c);
     s = zeros(n-2,1);

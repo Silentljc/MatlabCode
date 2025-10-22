@@ -107,7 +107,7 @@ for p=1:length(M)
 end
 for k=2:length(M)
     X=error_inf(k-1)/error_inf(k);
-    Norm(k-1)=log2(X);  
+    Norm(k-1)=X;  
 end
 figure(length(N)+1)
 plot(1:length(N)-1,Norm,'-b^');

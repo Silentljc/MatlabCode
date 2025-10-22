@@ -1,8 +1,8 @@
 tic;
 clear
 clc
-M=[5,10,20,40,80];% 空间网格数量
-N=M;% 时间网格数量
+M=[10,20,40];% 空间网格数量
+N=[100,400,1600];% 时间网格数量
 for p=1:length(M)
     h=1/M(p);% 这里定义空间步长等距
     tau=1/N(p); % 时间步长
@@ -115,7 +115,7 @@ for p=1:length(M)
 end
 for k=2:length(M)
     X=error_inf(k-1)/error_inf(k);
-    Norm(k-1)=log2(X);  
+    Norm(k-1)=X;  
 end
 figure(length(N)+1)
 plot(1:length(N)-1,Norm,'-b^');
