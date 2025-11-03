@@ -120,8 +120,8 @@ for p=1:length(M)
         end
     end
 
-    error=abs(Numerical(:,:,end)-Accurate(:,:,end));  % 修正：使用end而不是M(p)+1
-    error_inf(p)=max(max(error));
+    error=abs(Numerical(:,:,:)-Accurate(:,:,:));  
+    error_inf(p)=max(error(:));
     figure(p)
     [X,Y]=meshgrid(y,x);
     subplot(1,3,1)
@@ -135,7 +135,7 @@ for p=1:length(M)
     title('数值解图像');
     grid on;
     subplot(1,3,3)
-    surf(X,Y,error);
+    surf(X,Y,error(:,:,end));
     xlabel('x');ylabel('y');zlabel('error');
     title('误差图像');
     grid on;

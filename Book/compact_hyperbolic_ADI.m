@@ -1,5 +1,6 @@
 %紧双曲ADI
 
+
 clear;
 clc;
 tic;
@@ -184,7 +185,7 @@ for p = 1:length(M)
         end
     end
 
-    error = abs(Numerical(:,:,end) - Accurate(:,:,end));
+    error = abs(Numerical(:,:,:) - Accurate(:,:,:));
     error_inf(p) = max(error(:));
     
     % 绘图
@@ -204,7 +205,7 @@ for p = 1:length(M)
     grid on;
     
     subplot(1,3,3);
-    surf(X, Y, error);
+    surf(X, Y, error(:,:,end));
     xlabel('x'); ylabel('y'); zlabel('error');
     title('误差');
     grid on;
